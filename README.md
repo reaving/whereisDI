@@ -6,7 +6,7 @@ This addon only works if the character using it is in Jakoh's unity.
 
 When Mireu leaves or is defeated, this addon will update the mireu.xml file with the date and time.
 
-This addon allows your LS members can use two new commands:
+This addon allows your LS members can use two new commands in LS chat:
 
 !di
 This will display the latest domain invasion information.
