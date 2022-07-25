@@ -79,20 +79,38 @@ windower.register_event('incoming text', function(_, text, mode, _, blocked)
     if stepDI == "Mireu appeared" then
         
         -- Fire off LS Spam.
-        windower.chat.input:schedule(1, '/l '..lastDImsg..'[just now]')
-        windower.chat.input:schedule(6, '/l '..lastDImsg..'[5 seconds ago]')
-        windower.chat.input:schedule(11,'/l '..lastDImsg..'[10 seconds ago]')
+        -- LS#1 = '/l',  LS#2 = '/l2'
+        
+        -- Comment in/out what you need or don't need.
+        
+        windower.chat.input:schedule(001,   '/l '..lastDImsg..'[just now]')
+        --windower.chat.input:schedule(003,   '/l2 '..lastDImsg..'[just now]')
+        windower.chat.input:schedule(006,   '/l '..lastDImsg..'[5 seconds ago]')
+        --windower.chat.input:schedule(008,   '/l2 '..lastDImsg..'[5 seconds ago]')
+        windower.chat.input:schedule(011,   '/l '..lastDImsg..'[10 seconds ago]')
+        --windower.chat.input:schedule(013,   '/l2 '..lastDImsg..'[10 seconds ago]')
+        
         windower.chat.input:schedule(16,'/yell '..zoneDI..', '..stepDI)
-        windower.chat.input:schedule(21,'/l '..lastDImsg..'[20 seconds ago]')
+        windower.chat.input:schedule(021,   '/l '..lastDImsg..'[20 seconds ago]')
+        --windower.chat.input:schedule(023,   '/l2 '..lastDImsg..'[20 seconds ago]')
+        
         windower.chat.input:schedule(26,'/shout '..zoneDI..', '..stepDI)
-        windower.chat.input:schedule(31,'/l '..lastDImsg..'[30 seconds ago]')
-        windower.chat.input:schedule(61,'/l '..lastDImsg..'[one minute ago]')
+        windower.chat.input:schedule(031,   '/l '..lastDImsg..'[30 seconds ago]')
+        --windower.chat.input:schedule(033,   '/l2 '..lastDImsg..'[30 seconds ago]')
+        windower.chat.input:schedule(061,   '/l '..lastDImsg..'[one minute ago]')
+        --windower.chat.input:schedule(063,   '/l2 '..lastDImsg..'[one minute ago]')
+        
         windower.chat.input:schedule(76,'/yell '..zoneDI..', '..stepDI)
-        windower.chat.input:schedule(91,'/l '..lastDImsg..'[one minute and 30 seconds ago]')
-        windower.chat.input:schedule(121,'/l '..lastDImsg..'[two minutes ago]')
-        windower.chat.input:schedule(151,'/l '..lastDImsg..'[two minutes and 30 seconds ago]')
+        windower.chat.input:schedule(091,   '/l '..lastDImsg..'[one minute and 30 seconds ago]')
+        --windower.chat.input:schedule(093,   '/l2 '..lastDImsg..'[one minute and 30 seconds ago]')
+        windower.chat.input:schedule(121,   '/l '..lastDImsg..'[two minutes ago]')
+        --windower.chat.input:schedule(123,   '/l2 '..lastDImsg..'[two minutes ago]')
+        windower.chat.input:schedule(151,   '/l '..lastDImsg..'[two minutes and 30 seconds ago]')
+        --windower.chat.input:schedule(153,   '/l2 '..lastDImsg..'[two minutes and 30 seconds ago]')
+        
         windower.chat.input:schedule(161,'/yell '..zoneDI..', '..stepDI..' -- try not to get warped out!')
-        windower.chat.input:schedule(181,'/l '..lastDImsg..'[three minutes ago] Last Notice')
+        windower.chat.input:schedule(181,   '/l '..lastDImsg..'[three minutes ago] Last Notice')
+        --windower.chat.input:schedule(183,   '/l2 '..lastDImsg..'[three minutes ago] Last Notice')
         
     elseif stepDI == "Mireu left" then
         -- Record the time when Mireu left (undefeated).
@@ -123,7 +141,7 @@ function getTimeSince()
     elseif string.contains(lastDImsg,'Mireu') and minutesSince <= 60 then   -- Mireu takes more than ten minutes.
         return 'about '..minutesSince..' minutes ago'
     else                                                                    -- This add-on might have stopped working.
-        return '**this stopped working about '..minutesSince..' minutes ago** check if Kira is in a BC area'
+        return '**this stopped working about '..minutesSince..' minutes ago** check if we are in a BC area'
     end
 end
 
@@ -178,12 +196,13 @@ function getNextWindow()
 end
 
 -- Source: Windower4\res\chat.lua
--- mode: 3=tell, 4=party, 5=LS, 33=unity
+-- mode: 3=tell, 4=party, 5=LS#1, 27=LS#2, 33=unity
 windower.register_event('chat message', function(message,sender,mode,gm)
     
     message = trim12(string.lower(message))
     
-    if mode == 5 then
+    -- Comment in/out what you need or don't need.
+    if mode == 5 then                                                          -- linkshell #1
         if message:startswith('!di') or message:startswith('#di') then
             -- Someone types "!di" in LS chat
             windower.chat.input:schedule(1,'/l '..lastDImsg..'['..getTimeSince()..']')
@@ -198,6 +217,21 @@ windower.register_event('chat message', function(message,sender,mode,gm)
             windower.chat.input:schedule(1,'/l '..getNextWindow())
         end
     end
+    -- if mode == 27 then                                                          -- linkshell #2
+        -- if message:startswith('!di') or message:startswith('#di') then
+            -- -- Someone types "!di" in LS chat
+            -- windower.chat.input:schedule(1,'/l2 '..lastDImsg..'['..getTimeSince()..']')
+        -- elseif message:contains('where') and (message:contains(' di') or message:contains('di ')) then
+            -- -- Someone asks "where is di" in LS chat
+            -- windower.chat.input:schedule(1,'/l2 '..lastDImsg..'['..getTimeSince()..']')
+        -- elseif message:contains('where') and message:contains('domain') then
+            -- -- Someone asks "where is domain invasion" in LS chat
+            -- windower.chat.input:schedule(1,'/l2 '..lastDImsg..'['..getTimeSince()..']')
+        -- elseif message:contains('!mireu') or message:contains('#mireu') then
+            -- -- Asking for Mireu window
+            -- windower.chat.input:schedule(1,'/l2 '..getNextWindow())
+        -- end
+    -- end
 end)
 
 function GetNow()
